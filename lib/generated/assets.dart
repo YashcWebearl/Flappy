@@ -2,8 +2,9 @@
 class Assets {
   Assets._();
 
-  static const String audio90sGameUi2185095 = 'assets/audio/score.mp3';
-  static const String audioGameMusicLoop3144252 = 'assets/audio/background.mp3';
+  static const String audioBackground = 'assets/audio/background.mp3';
+  static const String audioGameOver = 'assets/audio/game_over.mp3';
+  static const String audioScore = 'assets/audio/score.mp3';
   static const String backgroundLayer1Sky = 'assets/images/background/layer1-sky.png';
   static const String backgroundLayer2Clouds = 'assets/images/background/layer2-clouds.png';
   static const String backgroundLayer3Clouds = 'assets/images/background/layer3-clouds.png';
@@ -12,6 +13,8 @@ class Assets {
   static const String backgroundLayer6Bushes = 'assets/images/background/layer6-bushes.png';
   static const String backgroundLayer7Bushes = 'assets/images/background/layer7-bushes.png';
   static const String fontsChewyRegular = 'assets/fonts/Chewy-Regular.ttf';
+  static const String iconTrophy = 'assets/icon/trophy.png';
+  static const String iconUser = 'assets/icon/user.png';
   static const String imagesDash = 'assets/images/dash.png';
   static const String imagesDash2 = 'assets/images/dash2.png';
   static const String imagesPipe = 'assets/images/pipe.png';

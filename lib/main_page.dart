@@ -1,8 +1,11 @@
 import 'package:flame/game.dart';
+import 'package:flappy/widget/app_style.dart';
+import 'package:flappy/widget/box_overlay.dart';
 import 'package:flappy/widget/top_score_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/game/game_cubit.dart';
+import 'db/local_storage.dart';
 import 'flappy_dash_game.dart';
 import 'widget/game_over_widget.dart';
 import 'widget/tap_to_play.dart';
@@ -45,7 +48,9 @@ class _MainPageState extends State<MainPage> {
         return Scaffold(
           body: Stack(
             children: [
-              GameWidget(game: _flappyDashGame),
+              GameWidget(game: _flappyDashGame,backgroundBuilder: (_){
+                return Container(color: AppColors.backgroundColor);
+              },),
               if (state.currentPlayingState.isGameOver) const GameOverWidget(),
               if (state.currentPlayingState.isIdle)
                 const Align(
@@ -53,6 +58,45 @@ class _MainPageState extends State<MainPage> {
                   child: TapToPlay(),
                 ),
               if (state.currentPlayingState.isNotGameOver) const TopScore(),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: BoxOverlay(child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset('assets/icon/user.png',height: 30,),
+                    SizedBox(width: 10),
+                    Text("My Profile",style: TextStyle(
+                      color: AppColors.mainColor,
+                      fontSize: 20,
+                    ),),
+                  ],
+                )),
+              ),
+              Positioned(
+                top: 90,
+                left: 16,
+                child: FutureBuilder<int>(
+                  future: LocalStorage.getBestScore(),
+                  builder: (context, snapshot) {
+                    int bestScore = snapshot.data ?? 0;
+                    return BoxOverlay(
+                      child: Row(
+                        children: [
+                          Image.asset('assets/icon/trophy.png', height: 30),
+                          SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Best Score', style: TextStyle(fontSize: 10, color: Colors.grey)),
+                              Text('$bestScore', style: TextStyle(fontSize: 18, color: AppColors.mainColor)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         );

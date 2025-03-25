@@ -49,11 +49,13 @@ class Dash extends PositionComponent
     _velocity += _gravity * dt;
     position += _velocity * dt;
     final double bottomY = gameRef.size.y - (size.y +435);
-
-    if (position.y >= bottomY) {
-      position.y = bottomY; // Keep Dash on the ground
-      _velocity = Vector2.zero(); // Stop movement
-      bloc.gameOver(); // Trigger game over
+    // if (position.y >= bottomY) {
+    //   position.y = bottomY; // Keep Dash on the ground
+    //   _velocity = Vector2.zero(); // Stop movement
+    //   bloc.gameOver(); // Trigger game over
+    // }
+    if (position.y.abs() > (game.size.y / 2) - 35) {
+      bloc.gameOver();
     }
   }
 

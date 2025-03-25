@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../db/local_storage.dart';
 import '../../widget/audio_helper.dart';
 
 part 'game_state.dart';
@@ -24,15 +25,17 @@ class GameCubit extends Cubit<GameState> {
     ));
   }
 
-  void gameOver() {
+  void gameOver() async{
     _audioHelper.stopBackgroundAudio();
-    _audioHelper.playGameOverSound();
+    await LocalStorage.saveBestScore(state.currentScore);
+    // _audioHelper.playGameOverSound();
     emit(state.copyWith(
       currentPlayingState: PlayingState.gameOver,
     ));
   }
 
   void restartGame() {
+    _audioHelper.initialize();
     emit(state.copyWith(
       currentPlayingState: PlayingState.idle,
       currentScore: 0,

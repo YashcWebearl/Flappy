@@ -1,0 +1,2 @@
+D:/Projects/Flappy_Bird/android/app/.cxx/Debug/1h1f172v/x86/CMakeFiles/edit_cache.dir
+D:/Projects/Flappy_Bird/android/app/.cxx/Debug/1h1f172v/x86/CMakeFiles/rebuild_cache.dir

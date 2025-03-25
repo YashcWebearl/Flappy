@@ -42,6 +42,7 @@ dependencies:
   flutter_animate: ^4.5.2
   just_audio: ^0.9.36
   just_audio_windows: ^0.2.0
+  shared_preferences: ^2.2.2
   #  flutter_soloud: ^2.0.2
   get_it: ^8.0.3
 
@@ -71,6 +72,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/background/
+    - assets/icon/
     - assets/audio/
 
   # An image asset can refer to one or more resolution-specific "variants", see
