@@ -1,12 +1,11 @@
 import 'package:flame/game.dart';
-import 'package:flappy/widget/game_over_widget.dart';
-import 'package:flappy/widget/tap_to_play.dart';
 import 'package:flappy/widget/top_score_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'bloc/game/game_cubit.dart';
 import 'flappy_dash_game.dart';
+import 'widget/game_over_widget.dart';
+import 'widget/tap_to_play.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -17,12 +16,13 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   late FlappyDashGame _flappyDashGame;
+
   late GameCubit gameCubit;
-  PlayingState? _latesteState;
+
+  PlayingState? _latestState;
 
   @override
   void initState() {
-    // TODO: implement initState
     gameCubit = BlocProvider.of<GameCubit>(context);
     _flappyDashGame = FlappyDashGame(gameCubit);
     super.initState();
@@ -31,40 +31,102 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GameCubit, GameState>(
-      listener: (context,state){
-        if(state.currentPlayingState.isIdle && _latesteState == PlayingState.gameover){
+      listener: (context, state) {
+        if (state.currentPlayingState.isIdle &&
+            _latestState == PlayingState.gameOver) {
           setState(() {
             _flappyDashGame = FlappyDashGame(gameCubit);
           });
         }
-        _latesteState = state.currentPlayingState;
+
+        _latestState = state.currentPlayingState;
       },
       builder: (context, state) {
-        return SafeArea(
-          child: Scaffold(
-              body: Stack(
-                children: [
-                  GameWidget(game: _flappyDashGame),
-                  if(state.currentPlayingState.isGameOver)
-                    const GameOverWidget(),
-                  if(state.currentPlayingState.isIdle)
-                    Align(
-                        alignment: Alignment(0, 0.7),
-                        child: TapToPlay()
-                    ),
-                  if(state.currentPlayingState.isNotGameOver)
-                     Align(
-                       alignment: Alignment(0, 0.1),
-                         child: const TopScore()
-                     ),
-                ],
-              )
+        return Scaffold(
+          body: Stack(
+            children: [
+              GameWidget(game: _flappyDashGame),
+              if (state.currentPlayingState.isGameOver) const GameOverWidget(),
+              if (state.currentPlayingState.isIdle)
+                const Align(
+                  alignment: Alignment(0, 0.7),
+                  child: TapToPlay(),
+                ),
+              if (state.currentPlayingState.isNotGameOver) const TopScore(),
+            ],
           ),
         );
       },
     );
   }
 }
+// import 'package:flame/game.dart';
+// import 'package:flappy/widget/game_over_widget.dart';
+// import 'package:flappy/widget/tap_to_play.dart';
+// import 'package:flappy/widget/top_score_widget.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+//
+// import 'bloc/game/game_cubit.dart';
+// import 'flappy_dash_game.dart';
+//
+// class MainPage extends StatefulWidget {
+//   const MainPage({super.key});
+//
+//   @override
+//   State<MainPage> createState() => _MainPageState();
+// }
+//
+// class _MainPageState extends State<MainPage> {
+//   late FlappyDashGame _flappyDashGame;
+//   late GameCubit gameCubit;
+//   PlayingState? _latesteState;
+//
+//   @override
+//   void initState() {
+//     // TODO: implement initState
+//     gameCubit = BlocProvider.of<GameCubit>(context);
+//     _flappyDashGame = FlappyDashGame(gameCubit);
+//     super.initState();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocConsumer<GameCubit, GameState>(
+//       listener: (context,state){
+//         if(state.currentPlayingState.isIdle && _latesteState == PlayingState.gameOver){
+//           setState(() {
+//             _flappyDashGame = FlappyDashGame(gameCubit);
+//           });
+//         }
+//         _latesteState = state.currentPlayingState;
+//       },
+//       builder: (context, state) {
+//         return SafeArea(
+//           child: Scaffold(
+//               body: Stack(
+//                 children: [
+//                   GameWidget(game: _flappyDashGame),
+//                   if(state.currentPlayingState.isGameOver)
+//                     const GameOverWidget(),
+//                   if(state.currentPlayingState.isIdle)
+//                     Align(
+//                         alignment: Alignment(0, 0.7),
+//                         child: TapToPlay()
+//                     ),
+//                   if(state.currentPlayingState.isNotGameOver)
+//                      Align(
+//                        alignment: Alignment(0, 0.1),
+//                          child: const TopScore()
+//                      ),
+//                 ],
+//               )
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
 // Align(
 //   alignment: Alignment(0, 0.8),
 //   child: IgnorePointer(

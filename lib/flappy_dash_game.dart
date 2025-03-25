@@ -39,7 +39,7 @@ class FlappyDashGame extends FlameGame<FlappyDashWorld> with KeyboardEvents,HasC
 }
 
 class FlappyDashWorld extends World with TapCallbacks,HasGameRef<FlappyDashGame> {
-  late FlappyDashRootComponents _rootComponents;
+  late FlappyDashRootComponent _rootComponents;
   @override
  Future<void> onLoad() async {
     // TODO: implement onLoad
@@ -47,7 +47,7 @@ class FlappyDashWorld extends World with TapCallbacks,HasGameRef<FlappyDashGame>
      await getIt.get<AudioHelper>().initialize();
      add(
        FlameBlocProvider<GameCubit,GameState>(create: ()=> game.gameCubit,children: [
-         _rootComponents = FlappyDashRootComponents(),
+         _rootComponents = FlappyDashRootComponent(),
        ],
        ),
      );
