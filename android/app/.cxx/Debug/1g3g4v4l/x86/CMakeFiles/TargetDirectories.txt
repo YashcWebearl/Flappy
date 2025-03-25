@@ -1,0 +1,2 @@
+D:/Projects/flappy/android/app/.cxx/Debug/1g3g4v4l/x86/CMakeFiles/edit_cache.dir
+D:/Projects/flappy/android/app/.cxx/Debug/1g3g4v4l/x86/CMakeFiles/rebuild_cache.dir
