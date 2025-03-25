@@ -27,6 +27,7 @@ class GameCubit extends Cubit<GameState> {
 
   void gameOver(){
     _audioHelper.stopBackgroundAudio();
+    _audioHelper.playGameOverSound();
     emit(state.copyWith(
       currentPlayingState: PlayingState.gameover,
     ));

@@ -3,12 +3,14 @@ import 'package:just_audio/just_audio.dart';
 class AudioHelper {
   final AudioPlayer _backgroundPlayer = AudioPlayer();
   final AudioPlayer _scorePlayer = AudioPlayer();
+  final AudioPlayer _gameOver = AudioPlayer();
 
   Future<void> initialize() async {
     try {
       // Load audio sources
       await _backgroundPlayer.setAsset('assets/audio/background.mp3');
       await _scorePlayer.setAsset('assets/audio/score.mp3');
+      await _gameOver.setAsset('assets/audio/game_over.mp3');
     } catch (e) {
       print("Error loading audio: $e");
     }
@@ -27,10 +29,15 @@ class AudioHelper {
     _scorePlayer.seek(Duration.zero); // Restart from beginning
     _scorePlayer.play();
   }
+  void playGameOverSound() {
+    _gameOver.seek(Duration.zero); // Restart from beginning
+    _gameOver.play();
+  }
 
   void dispose() {
     _backgroundPlayer.dispose();
     _scorePlayer.dispose();
+    _gameOver.dispose();
   }
 }
 
