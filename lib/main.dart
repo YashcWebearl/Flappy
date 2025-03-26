@@ -12,6 +12,8 @@ void main() async{
   // final AudioHelper audioHelper = AudioHelper();
   // await audioHelper.initialize(); // Ensure audio is loaded
   // runApp(MyApp(audioHelper));
+  final audioHelper = AudioHelper();
+  await audioHelper.initialize(); // Ensure SoLoud is initialized before app runs
   runApp(const MyApp());
 }
 
