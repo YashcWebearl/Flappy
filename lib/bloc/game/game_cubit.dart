@@ -28,7 +28,7 @@ class GameCubit extends Cubit<GameState> {
   void gameOver() async{
     _audioHelper.stopBackgroundAudio();
     await LocalStorage.saveBestScore(state.currentScore);
-    // _audioHelper.playGameOverSound();
+    _audioHelper.playGameOverSound();
     emit(state.copyWith(
       currentPlayingState: PlayingState.gameOver,
     ));

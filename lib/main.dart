@@ -9,8 +9,8 @@ import 'main_page.dart';
 void main() async{
   await setupServiceLocator();
   WidgetsFlutterBinding.ensureInitialized(); // Ensures async calls are completed
-  final AudioHelper audioHelper = AudioHelper();
-  await audioHelper.initialize(); // Ensure audio is loaded
+  // final AudioHelper audioHelper = AudioHelper();
+  // await audioHelper.initialize(); // Ensure audio is loaded
   // runApp(MyApp(audioHelper));
   runApp(const MyApp());
 }
