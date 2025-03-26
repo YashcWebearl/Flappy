@@ -99,7 +99,7 @@ class AudioHelper{
   SoundHandle? _playingBackground;
 
   late AudioSource _scoreSource;
-  late AudioSource _gameOverSource;
+
   Future<void> initialize()async {
     _soLoud = SoLoud.instance;
     if(_soLoud.isInitialized){
@@ -108,7 +108,6 @@ class AudioHelper{
     await _soLoud.init();
     _backgroundSourcel = await _soLoud.loadAsset('assets/audio/background.mp3');
     _scoreSource = await _soLoud.loadAsset('assets/audio/score.mp3');
-    _gameOverSource = await _soLoud.loadAsset('assets/audio/game_over.mp3');
   }
 
   void playBackgroundAudio()async{
@@ -130,8 +129,5 @@ class AudioHelper{
 
   void playScoreCollectSound()async{
     await _soLoud.play(_scoreSource);
-  }
-  void playGameOverSound() async {
-    await _soLoud.play(_gameOverSource);
   }
 }

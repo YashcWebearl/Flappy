@@ -7,13 +7,12 @@ import 'bloc/game/game_cubit.dart';
 import 'main_page.dart';
 
 void main() async{
-  await setupServiceLocator();
+
   WidgetsFlutterBinding.ensureInitialized(); // Ensures async calls are completed
-  // final AudioHelper audioHelper = AudioHelper();
-  // await audioHelper.initialize(); // Ensure audio is loaded
+  await setupServiceLocator();
+  final AudioHelper audioHelper = AudioHelper();
+  await audioHelper.initialize(); // Ensure audio is loaded
   // runApp(MyApp(audioHelper));
-  final audioHelper = AudioHelper();
-  await audioHelper.initialize(); // Ensure SoLoud is initialized before app runs
   runApp(const MyApp());
 }
 
