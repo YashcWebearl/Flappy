@@ -1,2 +1,0 @@
-D:/Projects/Flappy_Bird/android/app/.cxx/RelWithDebInfo/f2q24372/arm64-v8a/CMakeFiles/edit_cache.dir
-D:/Projects/Flappy_Bird/android/app/.cxx/RelWithDebInfo/f2q24372/arm64-v8a/CMakeFiles/rebuild_cache.dir

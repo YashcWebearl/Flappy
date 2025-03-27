@@ -1,2 +1,0 @@
-D:/Projects/flappy/android/app/.cxx/Debug/r265w5n6/arm64-v8a/CMakeFiles/edit_cache.dir
-D:/Projects/flappy/android/app/.cxx/Debug/r265w5n6/arm64-v8a/CMakeFiles/rebuild_cache.dir
