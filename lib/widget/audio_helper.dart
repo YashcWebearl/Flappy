@@ -1,45 +1,45 @@
-import 'package:just_audio/just_audio.dart';
-
-class AudioHelper {
-  final AudioPlayer _backgroundPlayer = AudioPlayer();
-  final AudioPlayer _scorePlayer = AudioPlayer();
-  final AudioPlayer _gameOver = AudioPlayer();
-
-  Future<void> initialize() async {
-    try {
-      // Load audio sources
-      await _backgroundPlayer.setAsset('assets/audio/background.mp3');
-      await _scorePlayer.setAsset('assets/audio/score.mp3');
-      // await _gameOver.setAsset('assets/audio/game_over.mp3');
-    } catch (e) {
-      print("Error loading audio: $e");
-    }
-  }
-
-  void playBackgroundAudio() {
-    _backgroundPlayer.setLoopMode(LoopMode.one); // Loop background music
-    _backgroundPlayer.play();
-  }
-
-  void stopBackgroundAudio() {
-    _backgroundPlayer.stop();
-  }
-
-  void playScoreCollectSound() {
-    _scorePlayer.seek(Duration.zero); // Restart from beginning
-    _scorePlayer.play();
-  }
-  // void playGameOverSound() {
-  //   _gameOver.seek(Duration.zero); // Restart from beginning
-  //   _gameOver.play();
-  // }
-
-  void dispose() {
-    _backgroundPlayer.dispose();
-    _scorePlayer.dispose();
-    _gameOver.dispose();
-  }
-}
+// import 'package:just_audio/just_audio.dart';
+//
+// class AudioHelper {
+//   final AudioPlayer _backgroundPlayer = AudioPlayer();
+//   final AudioPlayer _scorePlayer = AudioPlayer();
+//   final AudioPlayer _gameOver = AudioPlayer();
+//
+//   Future<void> initialize() async {
+//     try {
+//       // Load audio sources
+//       await _backgroundPlayer.setAsset('assets/audio/background.mp3');
+//       await _scorePlayer.setAsset('assets/audio/score.mp3');
+//       // await _gameOver.setAsset('assets/audio/game_over.mp3');
+//     } catch (e) {
+//       print("Error loading audio: $e");
+//     }
+//   }
+//
+//   void playBackgroundAudio() {
+//     _backgroundPlayer.setLoopMode(LoopMode.one); // Loop background music
+//     _backgroundPlayer.play();
+//   }
+//
+//   void stopBackgroundAudio() {
+//     _backgroundPlayer.stop();
+//   }
+//
+//   void playScoreCollectSound() {
+//     _scorePlayer.seek(Duration.zero); // Restart from beginning
+//     _scorePlayer.play();
+//   }
+//   // void playGameOverSound() {
+//   //   _gameOver.seek(Duration.zero); // Restart from beginning
+//   //   _gameOver.play();
+//   // }
+//
+//   void dispose() {
+//     _backgroundPlayer.dispose();
+//     _scorePlayer.dispose();
+//     _gameOver.dispose();
+//   }
+// }
 
 
 // import 'package:audioplayers/audioplayers.dart';
@@ -90,6 +90,78 @@ class AudioHelper {
 //   }
 // }
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_soloud/flutter_soloud.dart';
+
+class AudioHelper {
+  late SoLoud _soLoud;
+  AudioSource? _backgroundSource;
+  SoundHandle? _playingBackground;
+
+  AudioSource? _scoreSource;
+  AudioSource? _gameOver;
+  Future<void> initialize() async {
+    _soLoud = SoLoud.instance;
+
+    if (_soLoud.isInitialized) return;
+
+    try {
+      await _soLoud.init();
+      _backgroundSource = await _soLoud.loadAsset('assets/audio/background.mp3');
+      _scoreSource = await _soLoud.loadAsset('assets/audio/score.mp3');
+      _gameOver = await _soLoud.loadAsset('assets/audio/game_over.mp3');
+    } catch (e) {
+      debugPrint('Error initializing SoLoud: $e');
+    }
+  }
+
+  void playBackgroundAudio() async {
+    // Ensure initialization before playing audio
+    if (_backgroundSource == null) {
+      debugPrint("AudioHelper not initialized, calling initialize()");
+      await initialize();
+    }
+
+    if (_backgroundSource != null) {
+      _playingBackground = await _soLoud.play(_backgroundSource!);
+      _soLoud.setProtectVoice(_playingBackground!, true);
+    } else {
+      debugPrint("Error: Background source is still null after initialization.");
+    }
+  }
+  // Future<void> initialize() async {
+  //   _soLoud = SoLoud.instance;
+  //   if (_soLoud.isInitialized) {
+  //     return;
+  //   }
+  //   await _soLoud.init();
+  //   _backgroundSource = await _soLoud.loadAsset('assets/audio/background.mp3');
+  //   _scoreSource = await _soLoud.loadAsset('assets/audio/score.mp3');
+  //   _gameOver = await _soLoud.loadAsset('assets/audio/game_over.mp3');
+  // }
+  //
+  // void playBackgroundAudio() async {
+  //   _playingBackground = await _soLoud.play(_backgroundSource);
+  //   _soLoud.setProtectVoice(_playingBackground!, true);
+  // }
+
+  Future<void> stopBackgroundAudio() async {
+    if (_playingBackground == null) {
+      return;
+    }
+
+    _soLoud.fadeVolume(
+      _playingBackground!,
+      0.0,
+      const Duration(milliseconds: 500),
+    );
+    await _soLoud.play(_gameOver!);
+  }
+
+  void playScoreCollectSound() async {
+    await _soLoud.play(_scoreSource!);
+  }
+}
 
 // import 'package:flutter_soloud/flutter_soloud.dart';
 //

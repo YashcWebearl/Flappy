@@ -40,8 +40,12 @@
   <script src="flutter.js" defer></script>
 </head>
 <body>
+<script src="assets/packages/flutter_soloud/web/libflutter_soloud_plugin.js" defer></script>
+<script src="assets/packages/flutter_soloud/web/init_module.dart.js" defer></script>
   <script>
-    window.addEventListener('load', function(ev) {
+<!--    <script src="flutter_soloud_web.js"></script>-->
+
+  window.addEventListener('load', function(ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {

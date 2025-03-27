@@ -3,25 +3,31 @@ part of 'game_cubit.dart';
 class GameState with EquatableMixin {
   const GameState({
     this.currentScore = 0,
+    this.avatarIndex = 0, // Default avatar index
     this.currentPlayingState = PlayingState.idle,
   });
 
   final int currentScore;
   final PlayingState currentPlayingState;
+  final int avatarIndex; // Add avatar index
 
   GameState copyWith({
     int? currentScore,
     PlayingState? currentPlayingState,
+    int? avatarIndex, // Include avatar index
+
   }) =>
       GameState(
         currentScore: currentScore ?? this.currentScore,
         currentPlayingState: currentPlayingState ?? this.currentPlayingState,
+        avatarIndex: avatarIndex ?? this.avatarIndex, // Update avatar index
       );
 
   @override
   List<Object> get props => [
     currentScore,
     currentPlayingState,
+    avatarIndex,
   ];
 }
 

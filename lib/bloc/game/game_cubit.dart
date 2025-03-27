@@ -1,15 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../db/local_storage.dart';
 import '../../widget/audio_helper.dart';
 
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
-  GameCubit(this._audioHelper) : super(GameState());
-  // GameCubit() : super(GameState());
+  GameCubit(
+      this._audioHelper,
+      ) : super(const GameState());
+
   final AudioHelper _audioHelper;
+
   void startPlaying() {
     _audioHelper.playBackgroundAudio();
     emit(state.copyWith(
@@ -25,24 +27,77 @@ class GameCubit extends Cubit<GameState> {
     ));
   }
 
-  void gameOver() async{
+  void gameOver() {
     _audioHelper.stopBackgroundAudio();
-    await LocalStorage.saveBestScore(state.currentScore);
-    // _audioHelper.playGameOverSound();
     emit(state.copyWith(
       currentPlayingState: PlayingState.gameOver,
     ));
   }
 
   void restartGame() {
-    _audioHelper.initialize();
     emit(state.copyWith(
       currentPlayingState: PlayingState.idle,
       currentScore: 0,
     ));
   }
-
+  void changeAvatar(int index) {
+    emit(state.copyWith(avatarIndex: index));
+  }
 }
+
+
+// import 'package:bloc/bloc.dart';
+// import 'package:equatable/equatable.dart';
+//
+// import '../../db/local_storage.dart';
+// import '../../widget/audio_helper.dart';
+//
+// part 'game_state.dart';
+//
+// class GameCubit extends Cubit<GameState> {
+//   GameCubit(this._audioHelper) : super(GameState());
+//   // GameCubit() : super(GameState());
+//   final AudioHelper _audioHelper;
+//   void startPlaying() {
+//     _audioHelper.playBackgroundAudio();
+//     emit(state.copyWith(
+//       currentPlayingState: PlayingState.playing,
+//       currentScore: 0,
+//     ));
+//   }
+//
+//   void increaseScore() {
+//     _audioHelper.playScoreCollectSound();
+//     emit(state.copyWith(
+//       currentScore: state.currentScore + 1,
+//     ));
+//   }
+//
+//   void gameOver() async{
+//     _audioHelper.stopBackgroundAudio();
+//     await LocalStorage.saveBestScore(state.currentScore);
+//     // _audioHelper.playGameOverSound();
+//     emit(state.copyWith(
+//       currentPlayingState: PlayingState.gameOver,
+//     ));
+//   }
+//
+//   void restartGame() {
+//     _audioHelper.initialize();
+//     emit(state.copyWith(
+//       currentPlayingState: PlayingState.idle,
+//       currentScore: 0,
+//     ));
+//   }
+//
+// }
+
+
+
+
+
+
+
 // startPlaying(){
 //
 //   print("Playing sound...");
